@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
+    />
+    <meta name="theme-color" content="#0077B6" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <title>Saquarema Conectada</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              // Paleta Saquarema - Cores do oceano e sol
+              ocean: {
+                50: "#E6F4FA",
+                100: "#CCE9F5",
+                200: "#99D3EB",
+                300: "#66BDE0",
+                400: "#33A7D6",
+                500: "#0077B6",
+                600: "#005F92",
+                700: "#023E8A",
+                800: "#022E65",
+                900: "#03045E",
+              },
+              sun: {
+                50: "#FFFBEB",
+                100: "#FFF3C4",
+                200: "#FFE588",
+                300: "#FFD666",
+                400: "#FFD166",
+                500: "#F4A100",
+                600: "#D18700",
+              },
+              sand: {
+                50: "#FDFBF7",
+                100: "#F5EFE7",
+                200: "#EBE0D0",
+              },
+            },
+            fontFamily: {
+              sans: ["Inter", "system-ui", "sans-serif"],
+            },
+            animation: {
+              "fade-in": "fadeIn 0.5s ease-out forwards",
+              "fade-in-up": "fadeInUp 0.6s ease-out forwards",
+              "fade-out": "fadeOut 0.4s ease-in forwards",
+              "scale-in": "scaleIn 0.4s ease-out forwards",
+              "slide-up": "slideUp 0.5s ease-out forwards",
+              "pulse-soft": "pulseSoft 2s infinite",
+              shimmer: "shimmer 2s infinite linear",
+              "bounce-slow": "bounce 2s infinite",
+            },
+            keyframes: {
+              fadeIn: {
+                "0%": { opacity: "0" },
+                "100%": { opacity: "1" },
+              },
+              fadeInUp: {
+                "0%": { opacity: "0", transform: "translateY(20px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+              fadeOut: {
+                "0%": { opacity: "1" },
+                "100%": { opacity: "0" },
+              },
+              scaleIn: {
+                "0%": { opacity: "0", transform: "scale(0.9)" },
+                "100%": { opacity: "1", transform: "scale(1)" },
+              },
+              slideUp: {
+                "0%": { opacity: "0", transform: "translateY(100%)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+              pulseSoft: {
+                "0%, 100%": { opacity: "1" },
+                "50%": { opacity: "0.7" },
+              },
+              shimmer: {
+                "0%": { backgroundPosition: "-200% 0" },
+                "100%": { backgroundPosition: "200% 0" },
+              },
+            },
+            boxShadow: {
+              glass: "0 8px 32px rgba(0, 0, 0, 0.1)",
+              "glass-lg": "0 25px 50px -12px rgba(0, 0, 0, 0.15)",
+              "glow-blue": "0 0 40px rgba(0, 119, 182, 0.3)",
+              "glow-sun": "0 0 40px rgba(244, 161, 0, 0.3)",
+            },
+            backdropBlur: {
+              xs: "2px",
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ===== BASE STYLES ===== */
+      body {
+        font-family: "Inter", sans-serif;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      /* ===== SCROLLBAR HIDING ===== */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      /* ===== GLASSMORPHISM UTILITIES ===== */
+      .glass {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .glass-dark {
+        background: rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .glass-card {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+      }
+
+      /* ===== GRADIENT UTILITIES ===== */
+      .gradient-ocean {
+        background: linear-gradient(
+          135deg,
+          #0077b6 0%,
+          #023e8a 50%,
+          #03045e 100%
+        );
+      }
+
+      .gradient-sunset {
+        background: linear-gradient(
+          135deg,
+          #0077b6 0%,
+          #00b4d8 50%,
+          #90e0ef 100%
+        );
+      }
+
+      .gradient-premium {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+
+      /* ===== SAFE AREA INSETS (for notch devices) ===== */
+      .pt-safe {
+        padding-top: env(safe-area-inset-top, 0px);
+      }
+      .pb-safe {
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      .pl-safe {
+        padding-left: env(safe-area-inset-left, 0px);
+      }
+      .pr-safe {
+        padding-right: env(safe-area-inset-right, 0px);
+      }
+
+      /* ===== TOUCH-FRIENDLY BUTTON BASE ===== */
+      .btn-touch {
+        min-height: 44px;
+        min-width: 44px;
+      }
+
+      /* ===== LOADING SHIMMER ===== */
+      .shimmer-bg {
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.4) 50%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        background-size: 200% 100%;
+      }
+    </style>
+    <link rel="stylesheet" href="/index.css" />
+  </head>
+  <body class="bg-slate-50 text-slate-900 h-screen overflow-hidden">
+    <div id="root" class="h-full w-full"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

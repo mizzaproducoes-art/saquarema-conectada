@@ -1,0 +1,7 @@
+{
+  "name": "Saquarema Conectada",
+  "description": "Smart City App for Saquarema offering citizen services, social currency management, and AI assistance.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
