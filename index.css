@@ -2,41 +2,86 @@
    SAQUAREMA CONECTADA - Design System CSS
    ============================================
    
-   Este arquivo complementa os estilos inline do index.html
-   com animações e utilitários adicionais.
+   Tailwind CSS directives + custom utilities
 */
 
-/* Animação de entrada suave para containers */
-.animate-fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== BASE STYLES ===== */
+body {
+  font-family: "Inter", sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.animate-fade-in-up {
-  animation: fadeInUp 0.6s ease-out forwards;
+/* ===== SCROLLBAR HIDING ===== */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-.animate-scale-in {
-  animation: scaleIn 0.4s ease-out forwards;
+/* ===== GLASSMORPHISM UTILITIES ===== */
+.glass {
+  background: rgba(255, 255, 255, 0.15);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Delay classes para animações em sequência */
-.delay-100 {
-  animation-delay: 100ms;
-}
-.delay-200 {
-  animation-delay: 200ms;
-}
-.delay-300 {
-  animation-delay: 300ms;
-}
-.delay-400 {
-  animation-delay: 400ms;
-}
-.delay-500 {
-  animation-delay: 500ms;
+.glass-dark {
+  background: rgba(0, 0, 0, 0.2);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Loading screen overlay */
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* ===== GRADIENT UTILITIES ===== */
+.gradient-ocean {
+  background: linear-gradient(135deg, #0077b6 0%, #023e8a 50%, #03045e 100%);
+}
+
+.gradient-sunset {
+  background: linear-gradient(135deg, #0077b6 0%, #00b4d8 50%, #90e0ef 100%);
+}
+
+.gradient-premium {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* ===== SAFE AREA INSETS (for notch devices) ===== */
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.pl-safe {
+  padding-left: env(safe-area-inset-left, 0px);
+}
+.pr-safe {
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+/* ===== TOUCH-FRIENDLY BUTTON BASE ===== */
+.btn-touch {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* ===== LOADING SCREEN ===== */
 .loading-overlay {
   position: fixed;
   inset: 0;
@@ -45,10 +90,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #0077b6 0%, #023e8a 50%, #03045e 100%);
+  background: linear-gradient(135deg, #0077B6 0%, #023E8A 50%, #03045E 100%);
 }
 
-/* Spinner moderno */
+/* ===== SPINNER ===== */
 .spinner-ring {
   width: 48px;
   height: 48px;
@@ -59,28 +104,19 @@
 }
 
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+  to { transform: rotate(360deg); }
 }
 
-/* Pulsing dot indicator */
+/* ===== PULSE DOT ===== */
 .pulse-dot {
   width: 8px;
   height: 8px;
-  background: #ffd166;
+  background: #FFD166;
   border-radius: 50%;
   animation: pulseDot 1.5s ease-in-out infinite;
 }
 
 @keyframes pulseDot {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.5);
-    opacity: 0.5;
-  }
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.5; }
 }
