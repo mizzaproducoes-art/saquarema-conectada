@@ -1,20 +1,25 @@
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+import { UserRole } from "../types";
 
-export const askCityAssistant = async (question: string): Promise<string> => {
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+const ai = new GoogleGenAI(apiKey);
+
+export const askCityAssistant = async (question: string, role: UserRole): Promise<string> => {
   try {
-    const model = 'gemini-3-flash-preview';
+    const model = 'gemini-1.5-flash';
     
     const response = await ai.models.generateContent({
       model: model,
       contents: question,
       config: {
         systemInstruction: `You are 'Saquá-IA', a helpful and friendly smart city assistant for the city of Saquarema, Brazil. 
-        Keep answers concise (max 2 sentences) and helpful for a mobile user. 
-        Focus on tourism, transport, health, and local services.
-        If asked about the weather, assume it is sunny and 28 degrees.
-        If asked about the mayor, answer neutrally.`,
+        Current user role: ${role}.
+        ${role === 'tourist' 
+          ? 'Focus on tourism, beaches (Itaúna, Vila), surf picos, and where to eat (seafood). Be very welcoming and enthusiastic.' 
+          : 'Focus on public services, health (UPA), Moeda Saquá, and citizen rights. Be professional and efficient.'}
+        Keep answers concise (max 2 sentences).
+        If asked about the weather, assume it is sunny and 28 degrees.`,
         thinkingConfig: { thinkingBudget: 0 } 
       }
     });

@@ -10,35 +10,46 @@
 
 import React, { useState } from 'react';
 import { Home, Bus, Heart, AlertTriangle, Bell, User as UserIcon, ChevronRight } from 'lucide-react';
-import { AppTab, User } from '../types';
+import { AppTab, User, UserRole } from '../types';
 import TabHome from './TabHome';
 import TabTransport from './TabTransport';
 import TabHealth from './TabHealth';
 import TabPanic from './TabPanic';
+import TabEvents from './TabEvents';
 
-const Dashboard: React.FC = () => {
+interface DashboardProps {
+  role: UserRole;
+}
+
+const Dashboard: React.FC<DashboardProps> = ({ role }) => {
+  const isResident = role === 'resident';
   const [activeTab, setActiveTab] = useState<AppTab>(AppTab.HOME);
   
-  // Dados do usuário logado (mock realista)
+  // Dados do usuário logado (mock realista adaptado ao role)
   const user: User = {
     name: 'Emizael',
-    cpf: '123.456.789-00',
-    balance: 1250.00
+    cpf: isResident ? '123.456.789-00' : undefined,
+    balance: isResident ? 1250.00 : undefined,
+    role: role
   };
 
-  // Configuração das abas de navegação
+  // Configuração das abas de navegação dinâmica
   const navItems = [
-    { id: AppTab.HOME, icon: Home, label: 'Início', color: 'text-ocean-600' },
-    { id: AppTab.TRANSPORT, icon: Bus, label: 'Transporte', color: 'text-orange-500' },
-    { id: AppTab.HEALTH, icon: Heart, label: 'Saúde', color: 'text-rose-500' },
-    { id: AppTab.PANIC, icon: AlertTriangle, label: 'Pânico', color: 'text-red-600' },
+    { id: AppTab.HOME, icon: Home, label: isResident ? 'Início' : 'Explorar', color: 'text-ocean-600' },
+    { id: AppTab.TRANSPORT, icon: Bus, label: 'Bus', color: 'text-orange-500' },
+    ...(isResident 
+      ? [{ id: AppTab.HEALTH, icon: Heart, label: 'Saúde', color: 'text-rose-500' }]
+      : [{ id: AppTab.EVENTS, icon: Bell, label: 'Eventos', color: 'text-purple-500' }]
+    ),
+    { id: AppTab.PANIC, icon: AlertTriangle, label: 'SOS', color: 'text-red-600' },
   ];
 
   const renderTab = () => {
     switch(activeTab) {
       case AppTab.HOME: return <TabHome user={user} />;
       case AppTab.TRANSPORT: return <TabTransport />;
-      case AppTab.HEALTH: return <TabHealth />;
+      case AppTab.HEALTH: return isResident ? <TabHealth /> : <TabHome user={user} />;
+      case AppTab.EVENTS: return !isResident ? <TabEvents /> : <TabHome user={user} />;
       case AppTab.PANIC: return <TabPanic />;
       default: return <TabHome user={user} />;
     }

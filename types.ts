@@ -2,13 +2,18 @@ export enum AppTab {
   HOME = 'HOME',
   TRANSPORT = 'TRANSPORT',
   HEALTH = 'HEALTH',
-  PANIC = 'PANIC'
+  PANIC = 'PANIC',
+  EVENTS = 'EVENTS',
+  EXPLORE = 'EXPLORE'
 }
+
+export type UserRole = 'resident' | 'tourist';
 
 export interface User {
   name: string;
-  cpf: string;
-  balance: number;
+  cpf?: string;
+  balance?: number;
+  role: UserRole;
 }
 
 export interface BusLine {

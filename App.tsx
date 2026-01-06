@@ -8,15 +8,39 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import WelcomeScreen from './components/WelcomeScreen';
 import LoginScreen from './components/LoginScreen';
 import Dashboard from './components/Dashboard';
+import { UserRole } from './types';
 
 // Estados possíveis da aplicação
-type AppState = 'login' | 'loading' | 'dashboard';
+type AppState = 'welcome' | 'login' | 'loading' | 'dashboard';
 
 const App: React.FC = () => {
-  const [appState, setAppState] = useState<AppState>('login');
+  const [appState, setAppState] = useState<AppState>('welcome');
+  const [userRole, setUserRole] = useState<UserRole>(null);
   const [fadeOut, setFadeOut] = useState(false);
+
+  /**
+   * Gerencia a seleção inicial de perfil
+   */
+  const handleSelectRole = (role: 'resident' | 'tourist') => {
+    setFadeOut(true);
+    setUserRole(role);
+    
+    setTimeout(() => {
+      if (role === 'resident') {
+        setAppState('login');
+      } else {
+        // Turistas pulam o login e vão para o loading -> dashboard
+        setAppState('loading');
+        setTimeout(() => {
+          setAppState('dashboard');
+        }, 1500);
+      }
+      setFadeOut(false);
+    }, 400);
+  };
 
   /**
    * Gerencia a transição suave do login para o dashboard
@@ -79,7 +103,14 @@ const App: React.FC = () => {
   );
 
   return (
-    <div className="w-full h-full font-sans antialiased text-slate-900">
+    <div className="w-full h-full font-sans antialiased text-slate-900 overflow-hidden">
+      {/* Estado: Welcome / Seleção de Perfil */}
+      {appState === 'welcome' && (
+        <div className={`h-full ${fadeOut ? 'animate-fade-out' : 'animate-fade-in'}`}>
+          <WelcomeScreen onSelectRole={handleSelectRole} />
+        </div>
+      )}
+
       {/* Estado: Login */}
       {appState === 'login' && (
         <div className={`h-full ${fadeOut ? 'animate-fade-out' : 'animate-fade-in'}`}>
@@ -93,7 +124,7 @@ const App: React.FC = () => {
       {/* Estado: Dashboard */}
       {appState === 'dashboard' && (
         <div className="h-full animate-fade-in-up">
-          <Dashboard />
+          <Dashboard role={userRole || 'resident'} />
         </div>
       )}
     </div>

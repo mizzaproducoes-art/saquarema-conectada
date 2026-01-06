@@ -20,7 +20,12 @@ import {
   Sparkles,
   Send,
   QrCode,
-  Receipt
+  Receipt,
+  Palmtree,
+  Camera,
+  Utensils,
+  Sun,
+  Map
 } from 'lucide-react';
 import { askCityAssistant } from '../services/geminiService';
 import { User, ChatMessage } from '../types';
@@ -42,76 +47,107 @@ const TabHome: React.FC<TabHomeProps> = ({ user }) => {
     setInput('');
     setIsThinking(true);
 
-    const responseText = await askCityAssistant(input);
+    const responseText = await askCityAssistant(input, user.role);
     
     setIsThinking(false);
     setMessages(prev => [...prev, { role: 'model', text: responseText }]);
   };
 
-  // Atalhos rápidos para serviços
-  const quickAccess = [
-    { icon: Bus, label: 'Transporte', color: 'from-orange-400 to-orange-500', bgLight: 'bg-orange-50' },
-    { icon: Stethoscope, label: 'Saúde', color: 'from-rose-400 to-rose-500', bgLight: 'bg-rose-50' },
-    { icon: Umbrella, label: 'Turismo', color: 'from-teal-400 to-teal-500', bgLight: 'bg-teal-50' },
-    { icon: Landmark, label: 'Prefeitura', color: 'from-indigo-400 to-indigo-500', bgLight: 'bg-indigo-50' },
+  const isResident = user.role === 'resident';
+
+  // Atalhos rápidos dinâmicos
+  const residentQuickAccess = [
+    { icon: Bus, label: 'Transporte', color: 'from-orange-400 to-orange-500' },
+    { icon: Stethoscope, label: 'Saúde', color: 'from-rose-400 to-rose-500' },
+    { icon: Landmark, label: 'IPTU', color: 'from-indigo-400 to-indigo-500' },
+    { icon: FileText, label: 'Ouvidoria', color: 'from-amber-400 to-amber-500' },
   ];
+
+  const touristQuickAccess = [
+    { icon: Palmtree, label: 'Praias', color: 'from-cyan-400 to-ocean-500' },
+    { icon: Utensils, label: 'Onde Comer', color: 'from-orange-400 to-red-500' },
+    { icon: Map, label: 'Roteiros', color: 'from-emerald-400 to-teal-500' },
+    { icon: Camera, label: 'Fotos', color: 'from-pink-400 to-purple-500' },
+  ];
+
+  const quickAccess = isResident ? residentQuickAccess : touristQuickAccess;
 
   return (
     <div className="space-y-6 pb-28">
-      {/* ===== HERO: CARTÃO MOEDA SOCIAL ===== */}
-      <div className="relative overflow-hidden rounded-3xl gradient-ocean text-white shadow-glass-lg p-6">
-        {/* Elementos decorativos */}
-        <div className="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 -ml-10 -mb-10 w-32 h-32 bg-ocean-400/30 rounded-full blur-2xl"></div>
-        <div className="absolute top-1/2 right-4 w-24 h-24 bg-sun-400/10 rounded-full blur-2xl"></div>
-        
-        <div className="relative z-10">
-          {/* Header do cartão */}
-          <div className="flex justify-between items-start mb-6">
-            <div className="flex items-center gap-2">
-              <div className="p-2 rounded-xl bg-white/20 backdrop-blur-sm">
-                <CreditCard className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="text-sm font-semibold tracking-wide">Moeda Social</span>
-                <span className="block text-xs text-ocean-200 font-medium">SAQUÁ</span>
-              </div>
-            </div>
-            <div className="text-right">
-              <span className="text-[10px] uppercase tracking-wider text-ocean-200">Saldo</span>
-            </div>
-          </div>
+      {/* ===== HERO: CONDICIONAL ===== */}
+      {isResident ? (
+        <div className="relative overflow-hidden rounded-3xl gradient-ocean text-white shadow-glass-lg p-6">
+          {/* Elementos decorativos */}
+          <div className="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
           
-          {/* Valor do saldo */}
-          <div className="mb-8">
-            <p className="text-ocean-200 text-sm">Disponível</p>
-            <h2 className="text-4xl font-extrabold mt-1 tracking-tight flex items-baseline gap-1">
-              <span className="text-xl font-medium text-ocean-200">R$</span>
-              {user.balance.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-            </h2>
-          </div>
+          <div className="relative z-10">
+            <div className="flex justify-between items-start mb-6">
+              <div className="flex items-center gap-2">
+                <div className="p-2 rounded-xl bg-white/20 backdrop-blur-sm">
+                  <CreditCard className="w-5 h-5" />
+                </div>
+                <div>
+                  <span className="text-sm font-semibold tracking-wide">Moeda Social</span>
+                  <span className="block text-xs text-ocean-200 font-medium">SAQUÁ</span>
+                </div>
+              </div>
+              <div className="text-right">
+                <span className="text-[10px] uppercase tracking-wider text-ocean-200">Saldo</span>
+              </div>
+            </div>
+            
+            <div className="mb-8">
+              <p className="text-ocean-200 text-sm">Disponível</p>
+              <h2 className="text-4xl font-extrabold mt-1 tracking-tight flex items-baseline gap-1">
+                <span className="text-xl font-medium text-ocean-200">R$</span>
+                {user.balance?.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+              </h2>
+            </div>
 
-          {/* Ações do cartão */}
-          <div className="grid grid-cols-3 gap-3">
-            <button className="flex flex-col items-center gap-2 py-3 px-2 rounded-2xl bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/20 transition-all active:scale-95 btn-touch">
-              <QrCode className="w-5 h-5" />
-              <span className="text-xs font-medium">Pagar</span>
-            </button>
-            <button className="flex flex-col items-center gap-2 py-3 px-2 rounded-2xl bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/20 transition-all active:scale-95 btn-touch">
-              <ArrowRightLeft className="w-5 h-5" />
-              <span className="text-xs font-medium">Transferir</span>
-            </button>
-            <button className="flex flex-col items-center gap-2 py-3 px-2 rounded-2xl bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/20 transition-all active:scale-95 btn-touch">
-              <Receipt className="w-5 h-5" />
-              <span className="text-xs font-medium">Extrato</span>
+            <div className="grid grid-cols-3 gap-3">
+              <button className="flex flex-col items-center gap-2 py-3 px-2 rounded-2xl bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/20 transition-all active:scale-95 btn-touch">
+                <QrCode className="w-5 h-5" />
+                <span className="text-xs font-medium">Pagar</span>
+              </button>
+              <button className="flex flex-col items-center gap-2 py-3 px-2 rounded-2xl bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/20 transition-all active:scale-95 btn-touch">
+                <ArrowRightLeft className="w-5 h-5" />
+                <span className="text-xs font-medium">Transferir</span>
+              </button>
+              <button className="flex flex-col items-center gap-2 py-3 px-2 rounded-2xl bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/20 transition-all active:scale-95 btn-touch">
+                <Receipt className="w-5 h-5" />
+                <span className="text-xs font-medium">Extrato</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-orange-400 via-rose-500 to-purple-600 text-white shadow-glass-lg p-6">
+          <div className="absolute top-0 right-0 -mr-10 -mt-10 w-48 h-48 bg-white/20 rounded-full blur-3xl"></div>
+          
+          <div className="relative z-10">
+            <div className="flex items-center gap-2 mb-4">
+              <Sun className="w-5 h-5 text-yellow-200 animate-pulse" />
+              <span className="text-xs font-bold uppercase tracking-widest text-white/80">Explore Saquarema</span>
+            </div>
+            <h2 className="text-3xl font-black leading-tight">
+              Aproveite o <br /> melhor do Verão!
+            </h2>
+            <p className="text-sm text-white/90 mt-2 font-medium max-w-[200px]">
+              Descubra praias, picos de surf e a melhor gastronomia da região.
+            </p>
+            
+            <button className="mt-6 px-6 py-3 bg-white text-rose-600 rounded-2xl font-bold text-sm shadow-lg shadow-rose-900/20 active:scale-95 transition-all">
+              Ver Roteiros Ativos
             </button>
           </div>
         </div>
-      </div>
+      )}
 
       {/* ===== ACESSO RÁPIDO ===== */}
       <div>
-        <h3 className="text-slate-800 font-bold text-lg mb-4">Acesso Rápido</h3>
+        <h3 className="text-slate-800 font-bold text-lg mb-4">
+          {isResident ? 'Serviços do Cidadão' : 'Explorar a Cidade'}
+        </h3>
         <div className="grid grid-cols-4 gap-3">
           {quickAccess.map((item, idx) => (
             <button 
@@ -158,7 +194,9 @@ const TabHome: React.FC<TabHomeProps> = ({ user }) => {
           </div>
           <div>
             <h3 className="font-bold text-slate-800">Saquá-IA</h3>
-            <p className="text-xs text-slate-500">Assistente Virtual</p>
+            <p className="text-xs text-slate-500">
+               {isResident ? 'Assistente do Cidadão' : 'Guia Local Inteligente'}
+            </p>
           </div>
         </div>
         
