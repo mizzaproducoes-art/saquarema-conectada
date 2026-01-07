@@ -2,10 +2,23 @@ import { GoogleGenAI } from "@google/genai";
 
 import { UserRole } from "../types";
 
-const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-const ai = new GoogleGenAI(apiKey);
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
+let ai: GoogleGenAI | null = null;
+
+try {
+  if (apiKey) {
+    ai = new GoogleGenAI(apiKey);
+  }
+} catch (e) {
+  console.warn('Gemini API initialization failed:', e);
+}
+
 
 export const askCityAssistant = async (question: string, role: UserRole): Promise<string> => {
+  if (!ai) {
+    return "O assistente está sendo configurado. Tente novamente em alguns instantes.";
+  }
+  
   try {
     const model = 'gemini-1.5-flash';
     

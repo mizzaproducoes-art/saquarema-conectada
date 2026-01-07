@@ -53,13 +53,14 @@ const TabHealth: React.FC = () => {
   };
 
   return (
-    <div className="space-y-5 pb-28">
+    <div className="space-y-6 lg:space-y-8">
       {/* ===== STATUS DAS UNIDADES ===== */}
-      <div className="space-y-3">
-        <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider px-1">
+      <div className="space-y-4">
+        <h3 className="text-sm lg:text-base font-bold text-slate-500 uppercase tracking-wider px-1">
           Unidades de Saúde
         </h3>
         
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {healthUnits.map((unit, index) => {
           const config = queueConfig[unit.status];
           
@@ -97,31 +98,32 @@ const TabHealth: React.FC = () => {
             </div>
           );
         })}
+        </div>
       </div>
 
       {/* ===== AÇÕES RÁPIDAS ===== */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {/* Telemedicina */}
-        <button className="glass-card rounded-2xl p-5 shadow-glass flex flex-col items-center text-center transition-all hover:shadow-lg active:scale-[0.98] btn-touch">
-          <div className="w-12 h-12 bg-gradient-to-br from-ocean-400 to-ocean-600 rounded-2xl flex items-center justify-center text-white mb-3 shadow-md">
-            <Video className="w-6 h-6" />
+        <button className="glass-card rounded-2xl p-5 lg:p-6 shadow-glass flex flex-col items-center text-center transition-all hover:shadow-lg active:scale-[0.98] btn-touch hover-lift">
+          <div className="w-12 h-12 lg:w-14 lg:h-14 bg-gradient-to-br from-ocean-400 to-ocean-600 rounded-2xl flex items-center justify-center text-white mb-3 shadow-md">
+            <Video className="w-6 h-6 lg:w-7 lg:h-7" />
           </div>
-          <span className="font-bold text-slate-800 text-sm">Telemedicina</span>
-          <span className="text-xs text-slate-500 mt-1">Consulta online</span>
+          <span className="font-bold text-slate-800 text-sm lg:text-base">Telemedicina</span>
+          <span className="text-xs lg:text-sm text-slate-500 mt-1">Consulta online</span>
         </button>
 
         {/* Minhas Consultas */}
-        <button className="glass-card rounded-2xl p-5 shadow-glass flex flex-col items-center text-center transition-all hover:shadow-lg active:scale-[0.98] btn-touch">
-          <div className="w-12 h-12 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-2xl flex items-center justify-center text-white mb-3 shadow-md">
-            <Calendar className="w-6 h-6" />
+        <button className="glass-card rounded-2xl p-5 lg:p-6 shadow-glass flex flex-col items-center text-center transition-all hover:shadow-lg active:scale-[0.98] btn-touch hover-lift">
+          <div className="w-12 h-12 lg:w-14 lg:h-14 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-2xl flex items-center justify-center text-white mb-3 shadow-md">
+            <Calendar className="w-6 h-6 lg:w-7 lg:h-7" />
           </div>
-          <span className="font-bold text-slate-800 text-sm">Consultas</span>
-          <span className="text-xs text-slate-500 mt-1">Minha agenda</span>
+          <span className="font-bold text-slate-800 text-sm lg:text-base">Consultas</span>
+          <span className="text-xs lg:text-sm text-slate-500 mt-1">Minha agenda</span>
         </button>
       </div>
 
       {/* ===== PRÓXIMA CONSULTA (MOCK) ===== */}
-      <div className="glass-card rounded-2xl p-5 shadow-glass border-l-4 border-ocean-500">
+      <div className="glass-card rounded-2xl lg:rounded-3xl p-5 lg:p-6 shadow-glass border-l-4 border-ocean-500 hover-lift">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-xs text-ocean-600 font-semibold uppercase tracking-wider">Próxima consulta</p>
@@ -140,10 +142,10 @@ const TabHealth: React.FC = () => {
 
       {/* ===== CAMPANHAS ATIVAS ===== */}
       <div>
-        <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider px-1 mb-3">
+        <h3 className="text-sm lg:text-base font-bold text-slate-500 uppercase tracking-wider px-1 mb-3">
           Campanhas Ativas
         </h3>
-        <div className="space-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
           {campaigns.map((campaign, index) => (
             <div 
               key={index}

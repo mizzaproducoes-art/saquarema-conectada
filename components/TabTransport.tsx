@@ -80,9 +80,9 @@ const TabTransport: React.FC = () => {
   };
 
   return (
-    <div className="space-y-5 pb-28">
+    <div className="space-y-6 lg:space-y-8">
       {/* ===== TOGGLE MODO OFFLINE ===== */}
-      <div className="glass-card p-4 rounded-2xl shadow-glass flex justify-between items-center">
+      <div className="glass-card p-4 lg:p-5 rounded-2xl lg:rounded-3xl shadow-glass flex justify-between items-center hover-lift">
         <div className="flex items-center gap-3">
           <div className={`p-2.5 rounded-xl transition-all ${
             offlineMode 
@@ -115,13 +115,15 @@ const TabTransport: React.FC = () => {
       </div>
 
       {/* ===== LISTA DE LINHAS ===== */}
-      <div className="space-y-3">
+      <div className="space-y-4">
         <div className="flex items-center justify-between px-1">
-          <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider">
+          <h3 className="text-sm lg:text-base font-bold text-slate-500 uppercase tracking-wider">
             Linhas Disponíveis
           </h3>
-          <span className="text-xs text-slate-400">{buses.length} rotas</span>
+          <span className="text-xs lg:text-sm text-slate-400">{buses.length} rotas</span>
         </div>
+        
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         
         {buses.map((bus, index) => {
           const config = statusConfig[bus.status];
@@ -129,7 +131,7 @@ const TabTransport: React.FC = () => {
           return (
             <div 
               key={bus.id} 
-              className="glass-card rounded-2xl shadow-glass overflow-hidden animate-fade-in-up"
+              className="glass-card rounded-2xl lg:rounded-3xl shadow-glass overflow-hidden animate-fade-in-up hover-lift"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               {/* Barra de status lateral */}
@@ -186,11 +188,12 @@ const TabTransport: React.FC = () => {
             </div>
           );
         })}
+        </div>
       </div>
 
       {/* ===== AVISO OFFLINE ===== */}
       {offlineMode && (
-        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex items-start gap-3 animate-fade-in">
+        <div className="bg-amber-50 border border-amber-200 rounded-2xl lg:rounded-3xl p-4 lg:p-5 flex items-start gap-3 animate-fade-in hover-lift">
           <div className="p-2 rounded-lg bg-amber-100 text-amber-600">
             <Clock className="w-4 h-4" />
           </div>

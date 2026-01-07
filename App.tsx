@@ -103,17 +103,17 @@ const App: React.FC = () => {
   );
 
   return (
-    <div className="w-full h-full font-sans antialiased text-slate-900 overflow-hidden">
+    <div className="w-full min-h-screen font-sans antialiased text-slate-900">
       {/* Estado: Welcome / Seleção de Perfil */}
       {appState === 'welcome' && (
-        <div className={`h-full ${fadeOut ? 'animate-fade-out' : 'animate-fade-in'}`}>
+        <div className={`min-h-screen ${fadeOut ? 'animate-fade-out' : 'animate-fade-in'}`}>
           <WelcomeScreen onSelectRole={handleSelectRole} />
         </div>
       )}
 
       {/* Estado: Login */}
       {appState === 'login' && (
-        <div className={`h-full ${fadeOut ? 'animate-fade-out' : 'animate-fade-in'}`}>
+        <div className={`min-h-screen ${fadeOut ? 'animate-fade-out' : 'animate-fade-in'}`}>
           <LoginScreen onLogin={handleLogin} />
         </div>
       )}
@@ -123,7 +123,7 @@ const App: React.FC = () => {
 
       {/* Estado: Dashboard */}
       {appState === 'dashboard' && (
-        <div className="h-full animate-fade-in-up">
+        <div className="min-h-screen animate-fade-in-up">
           <Dashboard role={userRole || 'resident'} />
         </div>
       )}

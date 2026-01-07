@@ -45,24 +45,25 @@ const TabEvents: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-6 pb-28">
+    <div className="space-y-6 lg:space-y-8">
       {/* ===== HEADER ===== */}
       <div className="flex items-center justify-between px-1">
         <div>
-          <h2 className="text-2xl font-bold text-slate-800 tracking-tight">O que tá rolando</h2>
-          <p className="text-sm text-slate-500">Eventos e atrações em Saquarema</p>
+          <h2 className="text-2xl lg:text-3xl font-bold text-slate-800 tracking-tight">O que tá rolando</h2>
+          <p className="text-sm lg:text-base text-slate-500">Eventos e atrações em Saquarema</p>
         </div>
-        <div className="p-2 bg-white rounded-xl shadow-sm border border-slate-100">
-           <Calendar className="w-6 h-6 text-ocean-500" />
+        <div className="p-2 lg:p-3 bg-white rounded-xl shadow-sm border border-slate-100">
+           <Calendar className="w-6 h-6 lg:w-7 lg:h-7 text-ocean-500" />
         </div>
       </div>
 
       {/* ===== LISTA DE EVENTOS ===== */}
-      <div className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
         {events.map((event, idx) => (
           <div 
             key={event.id}
-            className="glass-card rounded-3xl overflow-hidden shadow-glass animate-fade-in-up"
+            className="glass-card rounded-3xl overflow-hidden shadow-glass animate-fade-in-up hover-lift"
+            style={{ animationDelay: `${idx * 100}ms` }}
           >
             {/* Banner superior colorido */}
             <div className={`h-2 bg-gradient-to-r ${event.color}`}></div>
@@ -107,13 +108,13 @@ const TabEvents: React.FC = () => {
       </div>
 
       {/* ===== BANNER INFORMATIVO ===== */}
-      <div className="bg-ocean-50 rounded-2xl p-5 border border-ocean-100 flex items-center gap-4">
-        <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm">
-           <MapPin className="w-6 h-6 text-ocean-500" />
+      <div className="bg-ocean-50 rounded-2xl lg:rounded-3xl p-5 lg:p-6 border border-ocean-100 flex items-center gap-4 hover-lift">
+        <div className="w-12 h-12 lg:w-14 lg:h-14 bg-white rounded-xl flex items-center justify-center shadow-sm">
+           <MapPin className="w-6 h-6 lg:w-7 lg:h-7 text-ocean-500" />
         </div>
         <div className="flex-1">
-           <p className="text-xs font-bold text-ocean-800 uppercase tracking-wider">Centro de Apoio</p>
-           <p className="text-[11px] text-ocean-600">Dúvidas sobre eventos? Visite o CAT na Praça da Vila.</p>
+           <p className="text-xs lg:text-sm font-bold text-ocean-800 uppercase tracking-wider">Centro de Apoio</p>
+           <p className="text-[11px] lg:text-xs text-ocean-600">Dúvidas sobre eventos? Visite o CAT na Praça da Vila.</p>
         </div>
       </div>
     </div>

@@ -1,15 +1,14 @@
 /**
  * ============================================
- * LOGIN SCREEN - Tela de Autenticação
+ * LOGIN SCREEN - Tela de Autenticação Responsiva
  * ============================================
  * 
- * Primeira impressão do app. Usa glassmorphism
- * sobre imagem de praia de Saquarema para
- * criar visual premium e moderno.
+ * Design premium com glassmorphism, responsivo
+ * para mobile e desktop com layout side-by-side.
  */
 
 import React, { useState } from 'react';
-import { Loader2, Landmark, Waves } from 'lucide-react';
+import { Loader2, Landmark, Waves, ArrowLeft, Shield, Sparkles } from 'lucide-react';
 
 interface LoginScreenProps {
   onLogin: () => void;
@@ -48,42 +47,90 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
   };
 
   return (
-    <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
-      {/* ===== BACKGROUND: Praia de Saquarema ===== */}
-      <div 
-        className="absolute inset-0 z-0 bg-cover bg-center scale-105"
-        style={{ 
-          backgroundImage: "url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop')",
-        }}
-      >
-        {/* Overlay com gradiente oceano */}
-        <div className="absolute inset-0 bg-gradient-to-b from-ocean-900/60 via-ocean-700/50 to-ocean-900/70 backdrop-blur-[2px]"></div>
-        
-        {/* Efeito de luz no topo */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-ocean-400/20 rounded-full blur-3xl"></div>
+    <div className="relative w-full min-h-screen flex flex-col lg:flex-row overflow-hidden">
+      
+      {/* ===== SEÇÃO ESQUERDA: BACKGROUND HERO ===== */}
+      <div className="relative flex-1 min-h-[30vh] lg:min-h-screen">
+        {/* Background: Praia de Saquarema */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ 
+            backgroundImage: "url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop')",
+          }}
+        >
+          {/* Overlay com gradiente oceano */}
+          <div className="absolute inset-0 bg-gradient-to-b lg:bg-gradient-to-r from-ocean-900/70 via-ocean-700/60 to-ocean-900/80"></div>
+          
+          {/* Efeitos de luz */}
+          <div className="absolute top-20 left-1/2 -translate-x-1/2 w-80 h-80 bg-ocean-400/30 rounded-full blur-3xl animate-float"></div>
+          <div className="absolute bottom-20 right-10 w-64 h-64 bg-sun-400/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }}></div>
+        </div>
+
+        {/* Conteúdo Hero */}
+        <div className="relative z-10 h-full flex flex-col items-center justify-center p-8 lg:p-16 text-white">
+          {/* Logo */}
+          <div className="animate-fade-in-down">
+            <div className="w-20 h-20 lg:w-28 lg:h-28 mx-auto mb-4 rounded-3xl bg-white/15 backdrop-blur-md flex items-center justify-center border border-white/25 glow-blue">
+              <Waves className="w-10 h-10 lg:w-14 lg:h-14 text-white" />
+            </div>
+          </div>
+
+          {/* Título */}
+          <div className="text-center animate-fade-in-up animate-delay-200">
+            <h1 className="text-4xl lg:text-6xl font-extrabold tracking-tight glow-text">
+              Saquarema
+            </h1>
+            <p className="text-ocean-200 font-medium tracking-[0.2em] text-sm lg:text-base uppercase mt-1">
+              Conectada
+            </p>
+          </div>
+
+          {/* Tagline (Desktop) */}
+          <p className="hidden lg:block text-xl text-white/80 text-center max-w-md mt-6 animate-fade-in animate-delay-400">
+            Acesse sua conta para aproveitar todos os serviços da cidade.
+          </p>
+
+          {/* Features (Desktop) */}
+          <div className="hidden lg:flex flex-col gap-4 mt-auto pt-12 animate-fade-in animate-delay-600">
+            <div className="flex items-center gap-3 text-white/70 text-sm">
+              <Shield className="w-5 h-5 text-ocean-300" />
+              Acesso seguro via Gov.br
+            </div>
+            <div className="flex items-center gap-3 text-white/70 text-sm">
+              <Sparkles className="w-5 h-5 text-sun-400" />
+              Moeda Social Saquá
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* ===== CARD DE LOGIN (Glassmorphism) ===== */}
-      <div className="relative z-10 w-full max-w-sm mx-4 p-8 rounded-3xl glass shadow-glass-lg animate-fade-in-up">
+      {/* ===== SEÇÃO DIREITA: FORMULÁRIO ===== */}
+      <div className="relative flex-1 flex flex-col items-center justify-center p-6 lg:p-16 bg-white lg:rounded-l-[3rem] lg:shadow-2xl z-10 -mt-8 lg:mt-0 rounded-t-[2rem] lg:rounded-t-none">
         
-        {/* Logo e Título */}
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-ocean-400 to-ocean-600 flex items-center justify-center shadow-glow-blue">
-            <Waves className="w-8 h-8 text-white" />
+        {/* Botão Voltar (Mobile) */}
+        <button 
+          type="button"
+          aria-label="Voltar"
+          className="lg:hidden absolute top-6 left-6 p-2 text-slate-400 hover:text-slate-600 rounded-xl hover:bg-slate-100 transition-all"
+        >
+          <ArrowLeft className="w-5 h-5" />
+        </button>
+
+        {/* Header do Formulário */}
+        <div className="text-center mb-8 animate-fade-in">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-ocean-50 text-ocean-600 rounded-full text-sm font-medium mb-4">
+            <Shield className="w-4 h-4" />
+            Área do Morador
           </div>
-          <h1 className="text-3xl font-bold text-white tracking-tight drop-shadow-lg">
-            Saquarema
-          </h1>
-          <p className="text-ocean-200 text-sm mt-1 font-medium tracking-wide">
-            CONECTADA
-          </p>
+          <h2 className="text-2xl lg:text-3xl font-bold text-slate-800">Acesse sua conta</h2>
+          <p className="text-slate-500 mt-2 text-sm">Entre com seu CPF e senha cadastrados</p>
         </div>
 
         {/* Formulário */}
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-5 w-full max-w-sm animate-fade-in-up animate-delay-200">
           {/* Campo CPF */}
           <div>
-            <label className="block text-white/90 text-xs font-semibold mb-2 ml-1 uppercase tracking-wider">
+            <label className="block text-slate-700 text-xs font-semibold mb-2 ml-1 uppercase tracking-wider">
               CPF
             </label>
             <input 
@@ -92,16 +139,16 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
               value={cpf}
               onChange={handleCPFChange}
               placeholder="000.000.000-00"
-              className="w-full px-4 py-3.5 rounded-xl bg-white/20 border border-white/30 text-white placeholder-white/50 
-                focus:outline-none focus:ring-2 focus:ring-ocean-400 focus:bg-white/30 focus:border-transparent
-                transition-all duration-300 backdrop-blur-sm text-base"
+              className="w-full px-4 py-4 rounded-xl bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 
+                focus:outline-none focus:ring-2 focus:ring-ocean-500/30 focus:border-ocean-400 focus:bg-white
+                transition-all duration-300 text-base"
               required
             />
           </div>
           
           {/* Campo Senha */}
           <div>
-            <label className="block text-white/90 text-xs font-semibold mb-2 ml-1 uppercase tracking-wider">
+            <label className="block text-slate-700 text-xs font-semibold mb-2 ml-1 uppercase tracking-wider">
               Senha
             </label>
             <input 
@@ -109,19 +156,19 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              className="w-full px-4 py-3.5 rounded-xl bg-white/20 border border-white/30 text-white placeholder-white/50 
-                focus:outline-none focus:ring-2 focus:ring-ocean-400 focus:bg-white/30 focus:border-transparent
-                transition-all duration-300 backdrop-blur-sm text-base"
+              className="w-full px-4 py-4 rounded-xl bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 
+                focus:outline-none focus:ring-2 focus:ring-ocean-500/30 focus:border-ocean-400 focus:bg-white
+                transition-all duration-300 text-base"
               required
             />
           </div>
 
           {/* Links auxiliares */}
-          <div className="flex justify-between items-center text-xs text-white/70 px-1">
-            <button type="button" className="hover:text-white transition-colors py-2">
+          <div className="flex justify-between items-center text-xs text-slate-500 px-1">
+            <button type="button" className="hover:text-ocean-600 transition-colors py-2">
               Primeiro Acesso
             </button>
-            <button type="button" className="hover:text-white transition-colors py-2">
+            <button type="button" className="hover:text-ocean-600 transition-colors py-2">
               Esqueci a senha
             </button>
           </div>
@@ -131,11 +178,11 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
             type="submit" 
             disabled={loading}
             className="w-full py-4 rounded-xl bg-gradient-to-r from-ocean-500 to-ocean-600 
-              hover:from-ocean-600 hover:to-ocean-700 
-              text-white font-bold text-base shadow-lg shadow-ocean-900/30 
+              hover:from-ocean-600 hover:to-ocean-700 hover:shadow-xl hover:scale-[1.02]
+              text-white font-bold text-base shadow-lg shadow-ocean-500/30 
               transform transition-all duration-300 
               active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed
-              flex justify-center items-center gap-2 btn-touch"
+              flex justify-center items-center gap-2 btn-touch btn-glow"
           >
             {loading ? (
               <>
@@ -149,31 +196,31 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
 
           {/* Divisor */}
           <div className="relative flex py-3 items-center">
-            <div className="flex-grow border-t border-white/20"></div>
-            <span className="flex-shrink mx-4 text-white/50 text-xs font-medium">ou</span>
-            <div className="flex-grow border-t border-white/20"></div>
+            <div className="flex-grow border-t border-slate-200"></div>
+            <span className="flex-shrink mx-4 text-slate-400 text-xs font-medium">ou</span>
+            <div className="flex-grow border-t border-slate-200"></div>
           </div>
 
           {/* Botão Gov.br */}
           <button 
             type="button"
-            className="w-full py-3.5 rounded-xl bg-white hover:bg-white/90 
-              text-ocean-800 font-semibold text-sm
-              shadow-md border border-white/50 
+            className="w-full py-4 rounded-xl bg-slate-900 hover:bg-slate-800 
+              text-white font-semibold text-sm
+              shadow-md hover:shadow-lg
               transform transition-all duration-300 
               active:scale-[0.98] 
               flex justify-center items-center gap-2 btn-touch"
           >
-            <Landmark className="w-4 h-4" />
+            <Landmark className="w-5 h-5" />
             Entrar com Gov.br
           </button>
         </form>
-      </div>
-      
-      {/* Footer */}
-      <div className="absolute bottom-8 text-white/40 text-xs font-light text-center">
-        <p>Prefeitura Municipal de Saquarema</p>
-        <p className="mt-1">© 2024 • Todos os direitos reservados</p>
+
+        {/* Footer */}
+        <div className="mt-auto pt-10 text-center animate-fade-in animate-delay-400">
+          <p className="text-slate-400 text-xs">Prefeitura Municipal de Saquarema</p>
+          <p className="text-slate-300 text-[10px] mt-1">© 2024 • Todos os direitos reservados</p>
+        </div>
       </div>
     </div>
   );

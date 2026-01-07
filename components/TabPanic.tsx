@@ -52,72 +52,75 @@ const TabPanic: React.FC = () => {
   // ===== TELA DE CONFIRMAÇÃO (APÓS ENVIO) =====
   if (sent) {
     return (
-      <div className="h-full flex flex-col items-center justify-center text-center px-6 pb-28 animate-fade-in">
-        {/* Ícone de sucesso */}
-        <div className="w-28 h-28 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-full flex items-center justify-center mb-8 shadow-lg shadow-emerald-200 animate-scale-in">
-          <CheckCircle2 className="w-14 h-14 text-white" />
-        </div>
-        
-        <h2 className="text-2xl font-extrabold text-slate-800 mb-2">
-          Socorro Solicitado!
-        </h2>
-        <p className="text-slate-600 max-w-xs leading-relaxed">
-          Sua localização foi enviada para a <strong>Guarda Municipal de Saquarema</strong> e seus contatos de emergência.
-        </p>
-        
-        {/* Detalhes do chamado */}
-        <div className="mt-8 bg-slate-50 rounded-2xl p-5 w-full max-w-xs">
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-slate-500">ID do Chamado</span>
-            <span className="font-mono font-bold text-slate-800">#SOS-9921</span>
+      <div className="min-h-[60vh] flex flex-col items-center justify-center text-center px-6 py-8 animate-fade-in">
+        <div className="max-w-md mx-auto">
+          {/* Ícone de sucesso */}
+          <div className="w-28 h-28 lg:w-32 lg:h-32 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-full flex items-center justify-center mb-8 shadow-lg shadow-emerald-200 animate-scale-in mx-auto">
+            <CheckCircle2 className="w-14 h-14 lg:w-16 lg:h-16 text-white" />
           </div>
-          <div className="flex items-center justify-between text-sm mt-3">
-            <span className="text-slate-500">Status</span>
-            <span className="flex items-center gap-1.5 text-emerald-600 font-semibold">
-              <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-              Em atendimento
-            </span>
+        
+          <h2 className="text-2xl lg:text-3xl font-extrabold text-slate-800 mb-2">
+            Socorro Solicitado!
+          </h2>
+          <p className="text-slate-600 max-w-xs lg:max-w-sm mx-auto leading-relaxed">
+            Sua localização foi enviada para a <strong>Guarda Municipal de Saquarema</strong> e seus contatos de emergência.
+          </p>
+        
+          {/* Detalhes do chamado */}
+          <div className="mt-8 bg-slate-50 rounded-2xl lg:rounded-3xl p-5 lg:p-6 w-full">
+            <div className="flex items-center justify-between text-sm lg:text-base">
+              <span className="text-slate-500">ID do Chamado</span>
+              <span className="font-mono font-bold text-slate-800">#SOS-9921</span>
+            </div>
+            <div className="flex items-center justify-between text-sm lg:text-base mt-3">
+              <span className="text-slate-500">Status</span>
+              <span className="flex items-center gap-1.5 text-emerald-600 font-semibold">
+                <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                Em atendimento
+              </span>
+            </div>
           </div>
-        </div>
 
-        {/* Contatos de emergência */}
-        <div className="mt-6 space-y-2 w-full max-w-xs">
-          <button className="w-full py-3.5 px-4 bg-ocean-500 hover:bg-ocean-600 text-white rounded-xl font-semibold flex items-center justify-center gap-2 transition-colors active:scale-[0.98] btn-touch">
-            <Phone className="w-4 h-4" />
-            Ligar para Guarda (153)
-          </button>
-          <button className="w-full py-3.5 px-4 bg-red-500 hover:bg-red-600 text-white rounded-xl font-semibold flex items-center justify-center gap-2 transition-colors active:scale-[0.98] btn-touch">
-            <Phone className="w-4 h-4" />
-            Ligar SAMU (192)
+          {/* Contatos de emergência */}
+          <div className="mt-6 flex flex-col md:flex-row gap-3 w-full">
+            <button className="flex-1 py-3.5 px-4 bg-ocean-500 hover:bg-ocean-600 text-white rounded-xl font-semibold flex items-center justify-center gap-2 transition-all active:scale-[0.98] btn-touch hover:shadow-lg">
+              <Phone className="w-4 h-4" />
+              Ligar para Guarda (153)
+            </button>
+            <button className="flex-1 py-3.5 px-4 bg-red-500 hover:bg-red-600 text-white rounded-xl font-semibold flex items-center justify-center gap-2 transition-all active:scale-[0.98] btn-touch hover:shadow-lg">
+              <Phone className="w-4 h-4" />
+              Ligar SAMU (192)
+            </button>
+          </div>
+        
+          <button 
+            onClick={handleReset}
+            className="mt-8 px-8 py-3 bg-slate-100 hover:bg-slate-200 rounded-xl text-slate-700 font-semibold transition-all active:scale-[0.98] btn-touch hover:shadow-md"
+          >
+            Voltar
           </button>
         </div>
-        
-        <button 
-          onClick={handleReset}
-          className="mt-8 px-8 py-3 bg-slate-100 hover:bg-slate-200 rounded-xl text-slate-700 font-semibold transition-colors active:scale-[0.98] btn-touch"
-        >
-          Voltar
-        </button>
       </div>
     );
   }
 
   // ===== TELA PRINCIPAL (BOTÃO SOS) =====
   return (
-    <div className="h-full flex flex-col items-center justify-center pb-32 px-6">
-      {/* Header */}
-      <div className="text-center mb-10 animate-fade-in">
-        <div className="inline-flex items-center gap-2 bg-red-50 text-red-600 px-4 py-2 rounded-full mb-4">
-          <Shield className="w-4 h-4" />
-          <span className="text-sm font-semibold">Segurança Cidadã</span>
+    <div className="min-h-[60vh] flex flex-col items-center justify-center py-8 px-6">
+      <div className="max-w-lg mx-auto flex flex-col items-center">
+        {/* Header */}
+        <div className="text-center mb-10 animate-fade-in">
+          <div className="inline-flex items-center gap-2 bg-red-50 text-red-600 px-4 py-2 rounded-full mb-4">
+            <Shield className="w-4 h-4" />
+            <span className="text-sm lg:text-base font-semibold">Segurança Cidadã</span>
+          </div>
+          <h2 className="text-3xl lg:text-4xl font-extrabold text-slate-800">
+            Botão de Pânico
+          </h2>
+          <p className="text-slate-500 mt-2 max-w-xs lg:max-w-sm mx-auto lg:text-lg">
+            Pressione em caso de emergência
+          </p>
         </div>
-        <h2 className="text-3xl font-extrabold text-slate-800">
-          Botão de Pânico
-        </h2>
-        <p className="text-slate-500 mt-2 max-w-xs mx-auto">
-          Pressione e segure em caso de emergência
-        </p>
-      </div>
 
       {/* Botão SOS Principal */}
       <div className="relative">
@@ -157,22 +160,23 @@ const TabPanic: React.FC = () => {
         </button>
       </div>
 
-      {/* Aviso legal */}
-      <div className="mt-12 bg-amber-50 border border-amber-200 p-4 rounded-2xl max-w-xs text-center animate-fade-in">
-        <div className="flex items-center justify-center gap-2 text-amber-700 mb-2">
-          <MapPin className="w-4 h-4" />
-          <span className="text-xs font-bold uppercase tracking-wider">Localização</span>
+        {/* Aviso legal */}
+        <div className="mt-12 bg-amber-50 border border-amber-200 p-4 lg:p-5 rounded-2xl lg:rounded-3xl max-w-xs lg:max-w-sm text-center animate-fade-in">
+          <div className="flex items-center justify-center gap-2 text-amber-700 mb-2">
+            <MapPin className="w-4 h-4" />
+            <span className="text-xs lg:text-sm font-bold uppercase tracking-wider">Localização</span>
+          </div>
+          <p className="text-xs lg:text-sm text-amber-800 leading-relaxed">
+            Ao ativar, sua geolocalização exata será compartilhada com a 
+            <strong> Guarda Municipal de Saquarema</strong> e autoridades locais.
+          </p>
         </div>
-        <p className="text-xs text-amber-800 leading-relaxed">
-          Ao ativar, sua geolocalização exata será compartilhada com a 
-          <strong> Guarda Municipal de Saquarema</strong> e autoridades locais.
-        </p>
-      </div>
 
-      {/* Conexão Starlink */}
-      <div className="mt-4 flex items-center gap-2 text-xs text-slate-400">
-        <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
-        Conexão via Starlink • Cobertura total
+        {/* Conexão Starlink */}
+        <div className="mt-4 flex items-center gap-2 text-xs lg:text-sm text-slate-400">
+          <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
+          Conexão via Starlink • Cobertura total
+        </div>
       </div>
     </div>
   );
